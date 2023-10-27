@@ -1,8 +1,14 @@
 from ics import Calendar, Event
 import arrow
+from pathlib import Path
 
 calendarPath = "/home/matthieu/Downloads/matthieu.ics"
 oldestEvent  = arrow.get("18/9/2023 4:00", "D/M/YYYY H:m")
+
+def appendStringInPath(filePath, str2append):
+    path = Path(filepath)
+    return path.with_stem(f"{path.stem}_{str2append}")
+
 
 with open(calendarPath, 'r') as icsFile:
     ics_text = icsFile.read()
@@ -38,5 +44,6 @@ for e in c.events:
 
 print(f"{kept} events kept \n{anomymized} events anomymized \n{skiped} events skiped")
 
-with open('my.ics', 'w') as f:
+
+with open(appendStringInPath(calendarPath, 'edited'), 'w') as f:
     f.writelines(out.serialize())
